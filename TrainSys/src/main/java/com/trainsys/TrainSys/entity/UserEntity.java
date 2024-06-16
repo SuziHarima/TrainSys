@@ -12,21 +12,25 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    Integer id;
+    private Integer id;
 
-    String name;
+    private String name;
 
     @Column(unique = true, nullable = false)
-    String email;
+    private String email;
 
     @Column(nullable = false)
-    String dateBirth;
+    private String dateBirth;
 
     @Column(unique = true)
-    String cpf;
+    private String cpf;
 
     @Column(nullable = false)
-    String password;
+    private String password;
+
+    @OneToOne
+    @JoinColumn (name = "plan_id")
+    private PlanEntity plan;
 
 
     public boolean validatePassword(LoginRequest loginRequest, BCryptPasswordEncoder bCryptEncoder) {

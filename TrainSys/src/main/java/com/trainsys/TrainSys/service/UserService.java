@@ -3,6 +3,7 @@ package com.trainsys.TrainSys.service;
 
 import com.trainsys.TrainSys.controller.request.NewUserRequest;
 import com.trainsys.TrainSys.entity.UserEntity;
+import com.trainsys.TrainSys.repository.PlanRepository;
 import com.trainsys.TrainSys.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PlanRepository planRepository;
 
     public void userRegistration(@RequestBody NewUserRequest newUserRequest) {
         boolean usuarioExsite = userRepository.findByEmail(newUserRequest.email()).isPresent();
@@ -27,6 +29,8 @@ public class UserService {
         user.setDateBirth(newUserRequest.dateBirth());
         user.setCpf(newUserRequest.cpf());
         user.setPassword(bCryptPasswordEncoder.encode(newUserRequest.password()));
+        user.setPlan(planRepository.findById(newUserRequest.plan()).orElseThrow(() -> new RuntimeException("Plano inválido ou inexistente")));
+
 
         userRepository.save(user);
     }

@@ -4,5 +4,6 @@ public record NewUserRequest(String name,
                              String email,
                              String dateBirth,
                              String cpf,
-                             String password) {
+                             String password,
+                             Integer plan) {
 }
