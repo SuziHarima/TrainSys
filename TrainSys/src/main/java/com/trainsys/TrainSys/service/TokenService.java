@@ -3,6 +3,8 @@ package com.trainsys.TrainSys.service;
 
 import com.trainsys.TrainSys.controller.request.LoginRequest;
 import com.trainsys.TrainSys.controller.response.LoginResponse;
+import com.trainsys.TrainSys.entity.UserEntity;
+import com.trainsys.TrainSys.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
