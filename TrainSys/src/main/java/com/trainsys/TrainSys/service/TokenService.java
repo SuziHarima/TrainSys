@@ -3,6 +3,8 @@ package com.trainsys.TrainSys.service;
 
 import com.trainsys.TrainSys.controller.request.LoginRequest;
 import com.trainsys.TrainSys.controller.response.LoginResponse;
+import com.trainsys.TrainSys.entity.UserEntity;
+import com.trainsys.TrainSys.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,7 +40,7 @@ public class TokenService {
             throw new RuntimeException("Senha inválida");
         }
         Instant now = Instant.now();
-        String scope = user.getRole().getName();
+        String scope = user.getRole().toString();
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("trainsys")
                 .issuedAt(now)
@@ -47,7 +49,7 @@ public class TokenService {
                 .claim("scope", scope)
                 .build();
         var JWTValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-        return new LoginResponse(JWTValue, EXPIRATION_TIME);
+        return new LoginResponse(JWTValue, "", EXPIRATION_TIME);
     }
 
     public String fieldSearch(String token, String claim) {
