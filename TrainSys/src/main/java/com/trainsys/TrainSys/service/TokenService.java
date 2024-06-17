@@ -40,7 +40,7 @@ public class TokenService {
             throw new RuntimeException("Senha inválida");
         }
         Instant now = Instant.now();
-        String scope = user.getRole().getName();
+        String scope = user.getRole().toString();
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("trainsys")
                 .issuedAt(now)
@@ -49,7 +49,7 @@ public class TokenService {
                 .claim("scope", scope)
                 .build();
         var JWTValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-        return new LoginResponse(JWTValue, EXPIRATION_TIME);
+        return new LoginResponse(JWTValue, "", EXPIRATION_TIME);
     }
 
     public String fieldSearch(String token, String claim) {

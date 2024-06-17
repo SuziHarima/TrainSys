@@ -1,5 +1,6 @@
 package com.trainsys.TrainSys;
 
+import com.trainsys.TrainSys.entity.UserRole;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
