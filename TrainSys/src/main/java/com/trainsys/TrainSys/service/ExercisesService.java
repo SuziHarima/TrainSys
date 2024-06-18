@@ -8,6 +8,7 @@ import com.trainsys.TrainSys.repository.ExercisesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -30,6 +31,14 @@ public class ExercisesService {
         ExercisesEntity registeredExercise = exercisesRepository.save(exercisesEntity);
 
         return new ExerciseResponse();
+    }
+
+    public List<ExercisesEntity> serachAll(String token) {
+        String userRole = tokenService.fieldSearch(token, "scope");
+        if (!Objects.equals(userRole, "ADM")) {
+            throw new RuntimeException("Usuario não tem acesso a essa funcionalidade");
+        }
+        return exercisesRepository.findAll();
     }
 
 }
