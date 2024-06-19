@@ -41,4 +41,12 @@ public class ExercisesService {
         return exercisesRepository.findAll();
     }
 
+    public void removeById(Integer id, String token) {
+        String userRole = tokenService.fieldSearch(token, "scope");
+        if (!Objects.equals(userRole, "ADM")) {
+            throw new RuntimeException("Usuario não tem acesso a essa funcionalidade");
+        }
+        exercisesRepository.deleteById(id);
+    }
+
 }

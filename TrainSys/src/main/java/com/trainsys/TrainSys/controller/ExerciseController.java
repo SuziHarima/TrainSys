@@ -33,4 +33,10 @@ public class ExerciseController {
         log.info("GET /exercises -> OK");
         return new ResponseEntity<>(exercises, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> removeExerciseById(@PathVariable Integer id){
+        exercisesService.removeById(id, "");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
