@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("curso")
+@RequestMapping("exercises")
 @RequiredArgsConstructor
 @Slf4j
 public class ExerciseController {
@@ -28,10 +28,9 @@ public class ExerciseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ExercisesEntity>> listAll(){
-        List<ExercisesEntity> exercises = exercisesService.serachAll("");
+    public ResponseEntity<List<ExercisesEntity>> listAll(@RequestHeader(name = "Authorization") String token){
         log.info("GET /exercises -> OK");
-        return new ResponseEntity<>(exercises, HttpStatus.OK);
+        return ResponseEntity.ok(exercisesService.serachAll(token.substring(7)));
     }
 
     @DeleteMapping("/{id}")

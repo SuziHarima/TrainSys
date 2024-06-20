@@ -28,7 +28,7 @@ public class ExercisesService {
         ExercisesEntity exercisesEntity = new ExercisesEntity();
         exercisesEntity.setDescription(newExerciseRequest.description());
 
-        ExercisesEntity registeredExercise = exercisesRepository.save(exercisesEntity);
+        exercisesRepository.save(exercisesEntity);
 
         return new ExerciseResponse();
     }
