@@ -4,6 +4,7 @@ package com.trainsys.TrainSys.controller;
 import com.trainsys.TrainSys.controller.request.NewStudentRequest;
 import com.trainsys.TrainSys.controller.response.SearchStudentsResponse;
 import com.trainsys.TrainSys.controller.response.StudentResponse;
+import com.trainsys.TrainSys.entity.StudentsEntity;
 import com.trainsys.TrainSys.service.StudentsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,5 +38,11 @@ public class StudentsController {
     public ResponseEntity<Void> removeStudentById(@RequestHeader(name = "Authorization") String token, @PathVariable Integer id){
         studentsService.removeById(id, token.substring(7));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateStudent(@RequestHeader(name = "Authorization") String token, @PathVariable Integer id, @RequestBody StudentsEntity student){
+        studentsService.update(token.substring(7), id, student);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

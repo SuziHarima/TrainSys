@@ -71,4 +71,16 @@ public class StudentsService {
         studentsRepository.deleteById(id);
     }
 
+    public StudentsEntity update(String token, Integer id, StudentsEntity student){
+
+        String userRole =  tokenService.fieldSearch(token, "scope");
+        if (!Objects.equals(userRole, "ADM")){
+            throw new RuntimeException("Usuario não tem acesso a essa funcionalidade");
+        }
+
+        studentsRepository.findById(id);
+        student.setId(id);
+        return studentsRepository.save(student);
+    }
+
 }
