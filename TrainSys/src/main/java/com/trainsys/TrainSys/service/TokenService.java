@@ -49,7 +49,7 @@ public class TokenService {
                 .claim("scope", scope)
                 .build();
         var JWTValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-        return new LoginResponse(JWTValue, "", EXPIRATION_TIME);
+        return new LoginResponse(JWTValue, user.getName(), EXPIRATION_TIME);
     }
 
     public String fieldSearch(String token, String claim) {

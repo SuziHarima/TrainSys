@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("users")
+@RequestMapping("/cadastro")
 public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/cadastro")
+    @PostMapping
     public ResponseEntity<String> saveUser(@Validated @RequestBody NewUserRequest newUserRequest){
         userService.userRegistration(newUserRequest);
         log.info("POST /users -> 201 CREATED");
