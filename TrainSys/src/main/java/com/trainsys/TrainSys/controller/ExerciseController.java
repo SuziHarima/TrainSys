@@ -3,7 +3,7 @@ package com.trainsys.TrainSys.controller;
 
 import com.trainsys.TrainSys.controller.request.NewExerciseRequest;
 import com.trainsys.TrainSys.controller.response.ExerciseResponse;
-import com.trainsys.TrainSys.entity.ExercisesEntity;
+import com.trainsys.TrainSys.controller.response.SearchExerciseResponse;
 import com.trainsys.TrainSys.service.ExercisesService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,14 +28,14 @@ public class ExerciseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ExercisesEntity>> listAll(@RequestHeader(name = "Authorization") String token){
+    public ResponseEntity<List<SearchExerciseResponse>> listAll(@RequestHeader(name = "Authorization") String token){
         log.info("GET /exercises -> OK");
-        return ResponseEntity.ok(exercisesService.serachAll(token.substring(7)));
+        return ResponseEntity.ok(exercisesService.searchAll(token.substring(7)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removeExerciseById(@PathVariable Integer id){
-        exercisesService.removeById(id, "");
+    public ResponseEntity<Void> removeExerciseById(@RequestHeader(name = "Authorization") String token, @PathVariable Integer id){
+        exercisesService.removeById(id, token.substring(7));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

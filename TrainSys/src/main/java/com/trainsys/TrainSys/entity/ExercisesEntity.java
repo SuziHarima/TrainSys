@@ -16,7 +16,7 @@ public class ExercisesEntity {
     @Column(nullable = false)
     private String description;
 
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn (name = "user_id")
     private UserEntity user;
 }
