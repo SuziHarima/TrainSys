@@ -63,4 +63,12 @@ public class StudentsService {
         return students.stream().map(s -> new SearchStudentsResponse(s.getId(), s.getName(), s.getEmail(), s.getDateBirth(), s.getCpf(), s.getContact(), s.getCity(), s.getNeighborhood(), s.getNumber(), s.getStreet(), s.getState(), s.getCep())).toList();
     }
 
+    public void removeById(Integer id, String token) {
+        String userRole = tokenService.fieldSearch(token, "scope");
+        if (!Objects.equals(userRole, "ADM")) {
+            throw new RuntimeException("Usuario não tem acesso a essa funcionalidade");
+        }
+        studentsRepository.deleteById(id);
+    }
+
 }

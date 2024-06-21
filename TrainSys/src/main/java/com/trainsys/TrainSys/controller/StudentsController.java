@@ -7,6 +7,7 @@ import com.trainsys.TrainSys.controller.response.StudentResponse;
 import com.trainsys.TrainSys.service.StudentsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,5 +31,11 @@ public class StudentsController {
     public ResponseEntity<List<SearchStudentsResponse>> listAll(@RequestHeader(name = "Authorization") String token){
         log.info("GET /exercises -> OK");
         return ResponseEntity.ok(studentsService.searchAll(token.substring(7)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> removeStudentById(@RequestHeader(name = "Authorization") String token, @PathVariable Integer id){
+        studentsService.removeById(id, token.substring(7));
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
