@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "students")
 @Data
@@ -21,7 +23,7 @@ public class StudentsEntity {
 
     @Column(nullable = false)
     @JsonFormat(pattern = "yyyy/MM/dd")
-    private String dateBirth;
+    private LocalDate dateBirth;
 
     @Column(nullable = false, unique = true)
     private String cpf;
@@ -29,7 +31,7 @@ public class StudentsEntity {
     @Column(nullable = false)
     private String contact;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
