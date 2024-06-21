@@ -2,12 +2,15 @@ package com.trainsys.TrainSys.controller;
 
 
 import com.trainsys.TrainSys.controller.request.NewStudentRequest;
+import com.trainsys.TrainSys.controller.response.SearchStudentsResponse;
 import com.trainsys.TrainSys.controller.response.StudentResponse;
 import com.trainsys.TrainSys.service.StudentsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("students")
@@ -21,5 +24,11 @@ public class StudentsController {
     public ResponseEntity<StudentResponse> saveStudent(@RequestHeader(name = "Authorization") String token, @RequestBody NewStudentRequest newStudentRequest){
         log.info("POST /users -> 201 CREATED");
         return ResponseEntity.ok(studentsService.studentsRegistration(newStudentRequest,token.substring(7)));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<SearchStudentsResponse>> listAll(@RequestHeader(name = "Authorization") String token){
+        log.info("GET /exercises -> OK");
+        return ResponseEntity.ok(studentsService.searchAll(token.substring(7)));
     }
 }
