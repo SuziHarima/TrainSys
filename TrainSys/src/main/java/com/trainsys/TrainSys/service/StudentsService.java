@@ -5,8 +5,10 @@ package com.trainsys.TrainSys.service;
 import com.trainsys.TrainSys.controller.request.NewStudentRequest;
 import com.trainsys.TrainSys.controller.response.SearchStudentsResponse;
 import com.trainsys.TrainSys.controller.response.StudentResponse;
+import com.trainsys.TrainSys.entity.PlanEntity;
 import com.trainsys.TrainSys.entity.StudentsEntity;
 import com.trainsys.TrainSys.entity.UserEntity;
+import com.trainsys.TrainSys.repository.PlanRepository;
 import com.trainsys.TrainSys.repository.StudentsRepository;
 import com.trainsys.TrainSys.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ public class StudentsService {
     private final StudentsRepository studentsRepository;
     private final UserRepository userRepository;
     private final TokenService tokenService;
+    private final PlanRepository planRepository;
 
     public StudentResponse studentsRegistration(NewStudentRequest newStudentRequest, String token) {
         //valida papel de usuario
@@ -33,6 +36,13 @@ public class StudentsService {
         Integer userId = Integer.valueOf(tokenService.fieldSearch(token, "sub"));
         UserEntity user = userRepository.findById(userId).orElseThrow(() ->
                 new RuntimeException("Usuário não encontrado"));
+
+        PlanEntity plan = user.getPlan();
+        int current = plan.getCurrentQuantity();
+        current += 1;
+        if (current > plan.getLimitStudent()){
+            throw new RuntimeException("Limite de Estudante para plano foi atingido");
+        }
 
         StudentsEntity student = new StudentsEntity();
         student.setName(newStudentRequest.name());
@@ -49,6 +59,9 @@ public class StudentsService {
         student.setUser(user);
 
         studentsRepository.save(student);
+
+        plan.setCurrentQuantity(current);
+        planRepository.save(plan);
 
         return new StudentResponse();
     }
