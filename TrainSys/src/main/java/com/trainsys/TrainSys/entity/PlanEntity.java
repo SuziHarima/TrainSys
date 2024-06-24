@@ -11,4 +11,6 @@ public class PlanEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;
     String name;
+    Integer limitStudent;
+    Integer currentQuantity;
 }

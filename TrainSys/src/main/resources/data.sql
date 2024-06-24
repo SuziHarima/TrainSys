@@ -1,5 +1,5 @@
-insert into plan (name)
+insert into plan (name, limitStudent)
 values
-('EMERALD'),
-('RUBY'),
-('SAPPHIRE');
+('EMERALD', 10),
+('RUBY', 13),
+('SAPPHIRE', 5);
